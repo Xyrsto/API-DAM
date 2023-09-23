@@ -36,14 +36,17 @@ const teste = new mongoose.Schema({
 
 app.post('/teste', async(req, res) => {
   try{
-    connect()
+    const { id, title } = req.body;
+
+    await connect()
+
     const model = mongoose.model('DAM-24180-23885', teste)
     const documents = await model.find({}).sort({ id: -1 }).limit(1);
     
     // Insert a new document
     const newObj = new model({
       id: documents.length + 1,
-      title: "teste"
+      title: title
     });
 
     await newObj.save();
