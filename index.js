@@ -11,6 +11,7 @@ app.get('/', function (req, res) {
 })
 
 app.use(express.json())
+app.use(cors())
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () =>{
@@ -54,7 +55,7 @@ app.post('/post/:id', (req, res) => {
 
 })
 
-app.post('/teste/post', (req, res) => {
+/*app.post('/teste/post', (req, res) => {
     const postData = new model(req.body);
     const documents = model.find({}).sort({ id: -1 }).limit(1);
 
@@ -72,6 +73,6 @@ app.post('/teste/post', (req, res) => {
       res.status(200).json({ message: 'Post request received and data saved successfully', data });
     }
   })
-})
+})*/
 
 
