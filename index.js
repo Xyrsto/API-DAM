@@ -24,5 +24,10 @@ mongoose.connect(uri).then(() =>{
   console.log(err)
 })
 
+app.post('/addUser', (req, res) =>{
+  console.log(req.body)
+  res.send(req.body)
+})
+
 
 
