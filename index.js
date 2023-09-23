@@ -29,35 +29,37 @@ async function connect(){
   }
 }
 
-const teste = new mongoose.Schema({
+await connect()
+
+const Schema = mongoose.Schema;
+
+const teste = new Schema({
   id: Number,
   title: String,
 });
 
-app.post('/teste', async(req, res) => {
-  try{
-    const { id, title } = req.body;
+const model = mongoose.model('DAM-24180-23885', teste);
 
-    await connect()
+// Middleware to parse JSON and URL-encoded data
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-    const model = mongoose.model('DAM-24180-23885', teste)
-    const documents = await model.find({}).sort({ id: -1 }).limit(1);
+app.post('/teste/post', (req, res) => {
+    const postData = new model(req.body);
+    const documents = model.find({}).sort({ id: -1 }).limit(1);
     
-    // Insert a new document
-    const newObj = new model({
-      id: documents.length + 1,
-      title: title
-    });
-
-    await newObj.save();
-
-    res.log('sucesso')
-    res.json({message: 'sucesso'})
-  }
-  catch(err){
-    console.error(err)
-    res.status(500).json({error: 'erro'})
-  }
+    // Save the data to the MongoDB collection
+    postData.save((err, data) => {
+    if (err) 
+    {
+      console.error('Error saving data to MongoDB:', err);
+      res.status(500).json({ message: 'Error saving data to MongoDB' });
+    } 
+    else {
+      console.log('Data saved to MongoDB:', data);
+      res.status(200).json({ message: 'Post request received and data saved successfully', data });
+    }
+  })
 })
 
 
