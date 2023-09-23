@@ -1,6 +1,7 @@
 //utilização do express para criar e configurar o servidor
 const express = require('express')
 const mongoose = require('mongoose')
+const User = require('./models/userModel')
 const cors = require('cors')
 const app = express()
 
@@ -24,9 +25,15 @@ mongoose.connect(uri).then(() =>{
   console.log(err)
 })
 
-app.post('/addUser', (req, res) =>{
-  console.log(req.body)
-  res.send(req.body)
+app.post('/addUser', async(req, res) =>{
+  try{
+    const user = await User.create(req.body)
+    res.status(200).json({user})
+  }
+  catch(err){
+    console.log(err.message)
+    res.status(500).json({msg: "err.message"})
+  }
 })
 
 
