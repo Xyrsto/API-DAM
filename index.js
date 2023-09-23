@@ -40,9 +40,9 @@ const teste = new Schema({
 
 const model = mongoose.model('DAM-24180-23885', teste);
 
-app.post('/post/:id/:teste', (req, res) => {
+app.post('/post/:id', (req, res) => {
   const { id } = req.params;
-  const { teste } = req.params;
+  const { teste } = req.body;
 
   if(!teste){
     res.status(418).json({ message: 'teste is required' });
