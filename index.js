@@ -40,10 +40,6 @@ const teste = new Schema({
 
 const model = mongoose.model('DAM-24180-23885', teste);
 
-// Middleware to parse JSON and URL-encoded data
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
 app.post('/teste/post', (req, res) => {
     const postData = new model(req.body);
     const documents = model.find({}).sort({ id: -1 }).limit(1);
