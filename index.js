@@ -10,13 +10,12 @@ app.get('/', function (req, res) {
 })
 
 app.post('/test', (req, res) => {
-  //encontra todos os dados, organizados e pega o primeiro valor
   let res = database.collection('DAM-24180-23885').find({}).sort({id: -1}).limit(1)
-  res.forEach(obj => {
+  resizeTo.forEach(obj => {
     if(obj){
-      let teste = {
-        teste: obj.id + 1,
-        title: "teste"
+      let teste ={
+        id: obj.id + 1,
+        title: teste
       }
       database.collection('DAM-24180-23885').insertOne(teste, (err, result) => {
         if(err){
@@ -26,7 +25,8 @@ app.post('/test', (req, res) => {
           console.log('Dado inserido com sucesso')
         }
       })
-  }
+    }
+  })
 })
 
 //conexão com a base de dados
