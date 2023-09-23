@@ -9,6 +9,26 @@ app.get('/', function (req, res) {
   res.send('Hello World')
 })
 
+app.post('/test', (req, res) => {
+  //encontra todos os dados, organizados e pega o primeiro valor
+  let res = database.collection('DAM-24180-23885').find({}).sort({id: -1}).limit(1)
+  res.forEach(obj => {
+    if(obj){
+      let teste = {
+        teste: obj.id + 1,
+        title: "teste"
+      }
+      database.collection('DAM-24180-23885').insertOne(teste, (err, result) => {
+        if(err){
+          console.log(err)
+        }
+        else{
+          console.log('Dado inserido com sucesso')
+        }
+      })
+  }
+})
+
 //conexão com a base de dados
 async function connect(){
   try{
