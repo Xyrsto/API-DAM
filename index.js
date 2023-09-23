@@ -10,7 +10,7 @@ app.get('/', function (req, res) {
 })
 
 app.post('/test', (req, res) => {
-  let res = database.collection('DAM-24180-23885').find({}).sort({id: -1}).limit(1)
+  res = database.collection('DAM-24180-23885').find({}).sort({id: -1}).limit(e1)
   resizeTo.forEach(obj => {
     if(obj){
       let teste ={
