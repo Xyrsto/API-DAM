@@ -29,7 +29,7 @@ async function connect(){
   }
 }
 
-await connect()
+connect()
 
 const Schema = mongoose.Schema;
 
