@@ -5,29 +5,10 @@ const app = express()
 
 const uri = 'mongodb+srv://admin:admin@cluster0.ujeva17.mongodb.net/?retryWrites=true&w=majority'
 
-app.get('/', function (req, res) {
+app.get('/teste', function (req, res) {
   res.send('Hello World')
 })
 
-app.post('/test', (req, res) => {
-  res = database.collection('DAM-24180-23885').find({}).sort({id: -1}).limit(e1)
-  resizeTo.forEach(obj => {
-    if(obj){
-      let teste ={
-        id: obj.id + 1,
-        title: "teste"
-      }
-      database.collection('DAM-24180-23885').insertOne(teste, (err, result) => {
-        if(err){
-          console.log(err)
-        }
-        else{
-          console.log('Dado inserido com sucesso')
-        }
-      })
-    }
-  })
-})
 
 //conexão com a base de dados
 async function connect(){
