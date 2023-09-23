@@ -43,6 +43,8 @@ const model = mongoose.model('DAM-24180-23885', teste);
 app.post('/teste/post', (req, res) => {
     const postData = new model(req.body);
     const documents = model.find({}).sort({ id: -1 }).limit(1);
+
+    console.log("possas")
     
     // Save the data to the MongoDB collection
     postData.save((err, data) => {
