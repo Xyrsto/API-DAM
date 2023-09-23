@@ -28,11 +28,12 @@ mongoose.connect(uri).then(() =>{
 app.post('/addUser', async(req, res) =>{
   try{
     const user = await User.create(req.body)
+    console.log('User created:', user); // Log user object for debugging
     res.status(200).json(user)
   }
   catch(err){
     console.log(err.message)
-    res.status(500).json({msg: "err.message"})
+    res.status(500).json({msg: err.message})
   }
 })
 
