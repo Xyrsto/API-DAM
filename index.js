@@ -15,7 +15,7 @@ app.post('/test', (req, res) => {
     if(obj){
       let teste ={
         id: obj.id + 1,
-        title: teste
+        title: "teste"
       }
       database.collection('DAM-24180-23885').insertOne(teste, (err, result) => {
         if(err){
