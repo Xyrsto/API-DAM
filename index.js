@@ -45,7 +45,7 @@ app.post('/post/:id', (req, res) => {
   const { teste } = req.body;
 
   if(!teste){
-    res.status(418).json({ message: 'teste is required' });
+    res.status(400).json({ message: 'teste is required' });
   }
 
   res.send({
