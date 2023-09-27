@@ -3,6 +3,6 @@ const router = epxress.Router();
 
 const ProductController = require('../controllers/productController')
 
-router.post('/addProduct', ProductController.create)
+router.post('/', ProductController.create)
 
 module.exports = router;
