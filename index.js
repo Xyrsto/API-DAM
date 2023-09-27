@@ -3,6 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const User = require('./models/userModel')
 const Product = require('./models/productModel')
+const multer=require('multer');
 const cors = require('cors')
 const app = express()
 
