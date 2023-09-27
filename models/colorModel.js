@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const productSchema = mongoose.Schema(
+const colorSchema = mongoose.Schema(
     {
         _id: mongoose.Schema.Types.ObjectId,
         name:{
@@ -21,6 +21,6 @@ const productSchema = mongoose.Schema(
     }
 )
 
-const Product = mongoose.model('Product', productSchema)
+const Color = mongoose.model('Product', colorSchema)
 
-module.exports = Product
+module.exports = Color

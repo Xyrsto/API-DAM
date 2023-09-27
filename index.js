@@ -2,7 +2,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const User = require('./models/userModel')
-const Product = require('./models/productModel')
+const Product = require('./models/colorModel')
 const cors = require('cors')
 const app = express()
 
@@ -27,7 +27,7 @@ mongoose.connect(uri).then(() =>{
 })
 
 //teste adicionar user
-app.post('/addProduct', (req, res, next) =>{
+/*app.post('/addProduct', (req, res, next) =>{
     const prod = new Product({
       _id: new mongoose.Types.ObjectId(),
       name: req.body.name,
@@ -44,9 +44,21 @@ app.post('/addProduct', (req, res, next) =>{
     .catch(err => {
       console.log(err)
       res.status(500).json({error: err})
-    });
+    }); 
+})
+*/
 
-    
+//teste adicionar user
+app.post('/addColor', async(req, res) =>{
+  try{
+    const product = await Product.create(req.body)
+    console.log('Color created:', product); // Log user object for debugging
+    res.status(200).json(product)
+  }
+  catch(err){
+    console.log(err.message)
+    res.status(500).json({msg: err.message})
+  }
 })
 
 //teste adicionar user
