@@ -10,14 +10,10 @@ const productSchema = mongoose.Schema(
             type: String,
             required: [true, "Introduza uma descrição"]
         },
-        price:{
+        color:{
             type: String,
-            required: [true, "Introduza um preço"]
+            required: [true, "Introduza uma cor"]
         },
-        pictureSrc:{
-            type: String,
-            required: [true, "Introduza uma imagem"]
-        }
     },
     {
         timestamps: true
