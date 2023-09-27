@@ -2,5 +2,22 @@ const Product = require('../models/productModel');
 
 //teste adicionar produto
 exports.create = async(req,res) =>{
-    res.json("Deu certo!")
+    try
+    {
+      const{name} = req.body
+      const file = req.file
+      const product = new Product({
+        name,
+        description,
+        price,
+        pictureSrc: file.path
+      })
+
+      await product.save()  
+      res.json(product, "salvo")
+    }
+    catch(error)
+    {
+      res.status(500).json({msg: error.message})
+    }
   }
