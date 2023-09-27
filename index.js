@@ -29,15 +29,19 @@ mongoose.connect(uri).then(() =>{
 
 //teste adicionar user
 app.post('/addProduct', async(req, res) =>{
-  try{
-    const user = await Product.create(req.body)
-    console.log('Product created:', user); // Log user object for debugging
-    res.status(200).json(user)
-  }
-  catch(err){
-    console.log(err.message)
-    res.status(500).json({msg: err.message})
-  }
+    const prod = new Product({
+      name: req.body.name,
+      description: req.body.description,
+      color: req.body.color,
+    });
+
+    prod.save()
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => console.log(err));
+
+    res.status(200).json(prod)
 })
 
 //teste adicionar user
