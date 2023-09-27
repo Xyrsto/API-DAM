@@ -39,7 +39,6 @@ app.post('/addProduct', (req, res, next) =>{
     .save()
     .exec()
     .then(result => {
-      console.log(result);
       res.status(200).json(prod)
     })
     .catch(err => {
