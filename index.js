@@ -30,6 +30,7 @@ mongoose.connect(uri).then(() =>{
 //teste adicionar user
 app.post('/addProduct', async(req, res) =>{
     const prod = new Product({
+      _id: mongoose.Types.ObjectId(),
       name: req.body.name,
       description: req.body.description,
       color: req.body.color,
