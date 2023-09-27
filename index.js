@@ -3,7 +3,6 @@ const express = require('express')
 const mongoose = require('mongoose')
 const User = require('./models/userModel')
 const Product = require('./models/productModel')
-const multer=require('multer');
 const cors = require('cors')
 const app = express()
 
@@ -28,7 +27,7 @@ mongoose.connect(uri).then(() =>{
 })
 
 //teste adicionar user
-app.post('/addProduct', async(req, res) =>{
+app.post('/addProduct', (req, res, next) =>{
     const prod = new Product({
       _id: new mongoose.Types.ObjectId(),
       name: req.body.name,
@@ -36,13 +35,19 @@ app.post('/addProduct', async(req, res) =>{
       color: req.body.color,
     });
 
-    prod.save()
+    prod
+    .save()
+    .exec()
     .then(result => {
       console.log(result);
+      res.status(200).json(prod)
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({error: err})
+    });
 
-    res.status(200).json(prod)
+    
 })
 
 //teste adicionar user
