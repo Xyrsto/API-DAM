@@ -2,6 +2,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const User = require('./models/userModel')
+const Product = require('./models/productModel')
 const cors = require('cors')
 const app = express()
 
@@ -25,6 +26,10 @@ mongoose.connect(uri).then(() =>{
   console.log(err)
 })
 
+const productRouter = require('./routes/product')
+app.use('/addProduct', productRouter)
+
+//teste adicionar user
 app.post('/addUser', async(req, res) =>{
   try{
     const user = await User.create(req.body)
@@ -36,6 +41,7 @@ app.post('/addUser', async(req, res) =>{
     res.status(500).json({msg: err.message})
   }
 })
+
 
 
 
