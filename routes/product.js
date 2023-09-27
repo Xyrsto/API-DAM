@@ -1,9 +1,10 @@
-const epxress = require('express');
-const router = epxress.Router();
-
-const ProductController = require('../controllers/productController')
+const express = require('express');
+const router = express.Router();
 const upload = require('../config/multer')
 
-router.post('/', upload.single("file"), ProductController.create)
+const productController = require('../controllers/productController')
+
+
+router.post('/', upload.single("file"), productController.create)
 
 module.exports = router;

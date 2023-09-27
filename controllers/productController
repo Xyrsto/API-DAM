@@ -14,7 +14,7 @@ exports.create = async(req,res) =>{
       })
 
       await product.save()  
-      res.json(product, "salvo")
+      res.json(product)
     }
     catch(error)
     {
