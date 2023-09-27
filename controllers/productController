@@ -4,7 +4,7 @@ const Product = require('../models/productModel');
 exports.create = async(req,res) =>{
     try
     {
-      const{name} = req.body
+      const{name, description, price} = req.body
       const file = req.file
       const product = new Product({
         name,
