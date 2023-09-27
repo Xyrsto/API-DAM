@@ -27,8 +27,18 @@ mongoose.connect(uri).then(() =>{
   console.log(err)
 })
 
-const productRouter = require('./routes/product')
-app.use('/addProduct', productRouter)
+//teste adicionar user
+app.post('/addProduct', async(req, res) =>{
+  try{
+    const user = await Product.create(req.body)
+    console.log('Product created:', user); // Log user object for debugging
+    res.status(200).json(user)
+  }
+  catch(err){
+    console.log(err.message)
+    res.status(500).json({msg: err.message})
+  }
+})
 
 //teste adicionar user
 app.post('/addUser', async(req, res) =>{
