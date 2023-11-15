@@ -55,8 +55,7 @@ app.post('/addUser', async(req, res) =>{
 
 app.get('/getColor', async(req, res) => {
   try{
-    const colorName = req.query.colorName;
-    const colorCode = await Color.findOne({name:colorName}).color;
+    const colorCode = await Color.find();
     res.send(colorCode);
   }
   catch(err){
