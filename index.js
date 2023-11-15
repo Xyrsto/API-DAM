@@ -26,29 +26,7 @@ mongoose.connect(uri).then(() =>{
   console.log(err)
 })
 
-//teste adicionar user
-/*app.post('/addProduct', (req, res, next) =>{
-    const prod = new Product({
-      _id: new mongoose.Types.ObjectId(),
-      name: req.body.name,
-      description: req.body.description,
-      color: req.body.color,
-    });
-
-    prod
-    .save()
-    .exec()
-    .then(result => {
-      res.status(200).json(prod)
-    })
-    .catch(err => {
-      console.log(err)
-      res.status(500).json({error: err})
-    }); 
-})
-*/
-
-//teste adicionar user
+//teste adicionar cor
 app.post('/addColor', async(req, res) =>{
   try{
     const color = await Color.create(req.body)
@@ -70,6 +48,19 @@ app.post('/addUser', async(req, res) =>{
   }
   catch(err){
     console.log(err.message)
+    res.status(500).json({msg: err.message})
+  }
+})
+
+
+app.get('/getColor', async(req, res) => {
+  try{
+    const colorName = req.query.colorName;
+    const colorCode = await Color.findOne({name:colorName})
+    console.log(colorCode);
+  }
+  catch(err){
+    console.log(err.message);
     res.status(500).json({msg: err.message})
   }
 })
