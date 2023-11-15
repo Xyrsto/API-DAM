@@ -57,7 +57,7 @@ app.get('/getColor', async(req, res) => {
   try{
     const colorName = req.query.colorName;
     const colorCode = await Color.findOne({name:colorName})
-    console.log(colorCode);
+    res.send(colorCode);
   }
   catch(err){
     console.log(err.message);
