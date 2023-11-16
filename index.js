@@ -114,6 +114,15 @@ app.get('/getColor', async(req, res) => {
   }
 })
 
+app.post('/getUserColors', async(req, res) => {
+  try {
+    const color = await Color.find({owner: req.body.owner});
+    res.status(200).json(color)
+  } catch (error) {
+    res.status(500).json({msg: err.message})
+  }
+})
+
 
 
 
