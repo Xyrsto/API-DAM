@@ -2,7 +2,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const User = require('./models/userModel')
-const bcrypt = require('bcrypt')  
+const bcrypt = require('bcrypt')
 const Color = require('./models/colorModel')
 const cors = require('cors')
 const app = express()
@@ -17,26 +17,26 @@ app.use(express.json())
 app.use(cors())
 
 const PORT = process.env.PORT || 3000
-app.listen(PORT, () =>{
+app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
 
-mongoose.connect(uri).then(() =>{
+mongoose.connect(uri).then(() => {
   console.log('Database is connected')
-}).catch((err) =>{
+}).catch((err) => {
   console.log(err)
 })
 
 //teste adicionar cor
-app.post('/addColor', async(req, res) =>{
-  try{
+app.post('/addColor', async (req, res) => {
+  try {
     const color = await Color.create(req.body)
     console.log('Color created:', color); // Log user object for debugging
     res.status(200).json(color)
   }
-  catch(err){
+  catch (err) {
     console.log(err.message)
-    res.status(500).json({msg: err.message})
+    res.status(500).json({ msg: err.message })
   }
 })
 
@@ -76,8 +76,8 @@ app.post('/login', async (req, res) => {
       const passwordMatch = await bcrypt.compare(password, user.password);
 
       console.log('Retrieved User:', user.username);
-      console.log(password); 
-      console.log(user.password); 
+      console.log(password);
+      console.log(user.password);
 
       if (passwordMatch) {
         res.status(200).json({ message: 'Login successful', user });
@@ -93,33 +93,107 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.post("/getId", async(req, res) => {
+app.post("/getId", async (req, res) => {
   try {
-    const userId = await User.findOne({username: req.body.username}).distinct("_id")
-    res.status(200).json({id: userId+""})
+    const userId = await User.findOne({ username: req.body.username }).distinct("_id")
+    res.status(200).json({ id: userId + "" })
   } catch (err) {
     console.log(err.message);
-    res.status(500).json({msg: err.message})
+    res.status(500).json({ msg: err.message })
   }
 })
 
-app.get('/getColor', async(req, res) => {
-  try{
+app.get('/getColor', async (req, res) => {
+  try {
     const colorCode = await Color.find();
     res.send(colorCode);
   }
-  catch(err){
+  catch (err) {
     console.log(err.message);
-    res.status(500).json({msg: err.message})
+    res.status(500).json({ msg: err.message })
   }
 })
 
-app.post('/getUserColors', async(req, res) => {
+app.post('/getUserColors', async (req, res) => {
   try {
-    const color = await Color.find({owner: req.body.owner});
+    const color = await Color.find({ owner: req.body.owner });
     res.status(200).json(color)
-  } catch (error) {
-    res.status(500).json({msg: err.message})
+  } catch (err) {
+    res.status(500).json({ msg: err.message })
+  }
+})
+
+app.post('/removeColor', async (req, res) => {
+  try {
+    const color = await Color.find({ owner: req.body.owner }, { color: req.body.color }).deleteOne();
+    res.status(200).json(color)
+  }
+  catch (err) {
+    res.status(500).json({ msg: err.message })
+  }
+})
+
+app.post('/updateColorName', async (req, res) => {
+  try {
+    const { owner, color, newName } = req.body;
+
+    const updatedColor = await Color.findOneAndUpdate(
+      { owner, color },
+      { $set: { name: newName } },
+      { new: true }
+    );
+
+    if (!updatedColor) {
+      return res.status(404).json({ msg: 'Color not found' });
+    }
+
+    // Send the updated color back in the response
+    res.json(updatedColor);
+
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+});
+
+
+app.post('/updatePassword', async (req, res) => {
+  try {
+    const { username, newPassword } = req.body;
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const updatedUser = await User.findOneAndUpdate({ username }, { $set: { password: hashedPassword } }, { new: true });
+    if (!updatedUser) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    res.json(updatedUser);
+  }
+  catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+})
+
+app.post('/updateEmail', async (req, res) => {
+  try {
+    const { username, newEmail } = req.body;
+    const updatedUser = await User.findOneAndUpdate({ username }, { $set: { email: newEmail } }, { new: true });
+    if (!updatedUser) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+})
+
+app.post('/updateUsername', async (req, res) => {
+  try {
+    const { username, newUsername } = req.body;
+    const updatedUser = await User.findOneAndUpdate({ username }, { $set: { username: newUsername } }, { new: true });
+    if (!updatedUser) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
   }
 })
 
