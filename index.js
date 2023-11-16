@@ -106,7 +106,7 @@ app.post("/getId", async(req, res) => {
 app.get('/getColor', async(req, res) => {
   try{
     const colorCode = await Color.find();
-    res.send(colorCode);
+    res.status(200).json(colorCode);
   }
   catch(err){
     console.log(err.message);
