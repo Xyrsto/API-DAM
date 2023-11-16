@@ -14,6 +14,10 @@ const colorSchema = mongoose.Schema(
             type: String,
             required: [true, "Introduza uma cor"]
         },
+        owner:{
+            type: String,
+            required: [true, "Login necessário"]
+        }
     },
     {
         timestamps: true
