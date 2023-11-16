@@ -96,7 +96,7 @@ app.post('/login', async (req, res) => {
 app.post("/getId", async(req, res) => {
   try {
     const userId = await User.findOne({username: req.body.username}).distinct("_id")
-    res.send(userId)
+    res.status(200).json(userId)
   } catch (err) {
     console.log(err.message);
     res.status(500).json({msg: err.message})
@@ -106,7 +106,7 @@ app.post("/getId", async(req, res) => {
 app.get('/getColor', async(req, res) => {
   try{
     const colorCode = await Color.find();
-    res.status(200).json(colorCode);
+    res.send(colorCode);
   }
   catch(err){
     console.log(err.message);
